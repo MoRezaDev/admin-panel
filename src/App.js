@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+
+import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Users from "./pages/Users";
+import Calendar from "./pages/Calendar";
+
+//import ThemeContext.......
+import ThemeContextProvider from "./context/ThemeContextProvider";
+
+//calling components.....................
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeContextProvider>
+      <div className="App">
+        <Navbar />
+        <Sidebar />
+        <Switch>
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/users" component={Users} />
+          <Route path="/Calendar" component={Calendar} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </div>
+    </ThemeContextProvider>
   );
 }
 
