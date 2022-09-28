@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 //building styled components............
 const ContainerStyles = styled.div`
-  height: 8px;
+  height: 10px;
   width: 100%;
   background-color: ${(props) => props.color};
   border-radius: 50px;
@@ -19,11 +19,6 @@ const FillerStyles = styled.div`
   border-bottom-left-radius: inherit;
 `;
 
-const LabelStyles = styled.span`
-  padding: 5;
-  color: "#fff";
-  font-weight: bold;
-`;
 function ProgressBar({ bgColor, completed, completedColor }) {
   return (
     <ContainerStyles color={bgColor}>

@@ -23,7 +23,7 @@ ChartJS.register(
   Legend
 );
 
-const labels = ["January", "February", "March", "April", "May"];
+const labels = ["January", "February", "March", "April", "May", "June", "Sep"];
 
 export const options = {
   plugins: {
@@ -41,6 +41,7 @@ export const options = {
     y: {
       stacked: true,
       grid: { display: false },
+      display: false,
     },
   },
 };

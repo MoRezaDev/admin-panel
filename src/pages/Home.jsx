@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 
+//importing components................
 import StackedChart from "../components/StackedChart";
 import ProgressBar from "../components/ProgressBar";
 
+//import assets.......................................
 import homeLogo from "../assets/homeLogo.svg";
 
+//import Icons...............................................
 import { AiFillStar, AiFillLike } from "react-icons/ai";
 import { BsHeartFill } from "react-icons/bs";
 import { BsEmojiLaughingFill } from "react-icons/bs";
@@ -16,20 +19,38 @@ import {
   IoMdArrowDropdown,
 } from "react-icons/io";
 
-import { homeData, progressData } from "../data/data";
+//import data objects..............................
+import { homeData, progressData, meetingData } from "../data/data";
+
+//import Theme Context.....................
+import { themeContext } from "../context/ThemeContextProvider";
 
 //building style components..........
 const HomeContainer = styled.div`
   margin-left: 280px;
   margin-top: 100px;
-  background-color: rgb(236, 239, 241);
+  background-color: ${(props) =>
+    props.themeContent === "light" ? "rgb(236, 239, 241)" : "rgb(55, 71, 79)"};
   padding: 0 40px 40px 60px;
+  @media (max-width: 1280px) {
+    margin-left: 0;
+  }
+
+  @media (max-width: 960px) {
+    padding: 20px;
+  }
 `;
 
 const ItemsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+  @media (max-width: 1280px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const ItemLeft = styled.div`
@@ -111,8 +132,10 @@ const ItemMiddle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  color: ${(props) => props.themeContent === "dark" && "#cfd8dc"};
   .cart {
-    background-color: #fff;
+    background-color: ${(props) =>
+      props.themeContent === "light" ? "#fff" : "rgb(38, 50, 56)"};
     padding: 1.5rem;
     border-radius: 1rem;
     > .items_cart {
@@ -150,7 +173,8 @@ const ItemMiddle = styled.div`
     }
   }
   .title_chart_container {
-    background-color: #fff;
+    background-color: ${(props) =>
+      props.themeContent === "light" ? "#fff" : "rgb(38, 50, 56)"};
     padding: 0.8rem;
     border-radius: 1rem;
     display: flex;
@@ -167,7 +191,8 @@ const ItemMiddle = styled.div`
   }
   .dashboard_button {
     padding: 1.5rem 1rem;
-    background-color: #eceff1;
+    background-color: ${(props) =>
+      props.themeContent === "light" ? "#eceff1" : "rgb(55, 71, 79)"};
     border-radius: 1rem;
     .container {
       cursor: pointer;
@@ -188,7 +213,8 @@ const ItemMiddle = styled.div`
           justify-content: center;
           width: 40px;
           height: 40px;
-          background-color: #fff;
+          background-color: ${(props) =>
+            props.themeContent === "light" ? "#fff" : "rgb(38, 50, 56)"};
           border-radius: 50%;
         }
       }
@@ -198,28 +224,96 @@ const ItemMiddle = styled.div`
 const ItemRight = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  color: ${(props) => props.themeContent === "dark" && "#cfd8dc"};
+
+  > span {
+    font-weight: bold;
+  }
   .cart_progress {
-    background-color: #fff;
+    background-color: ${(props) =>
+      props.themeContent === "light" ? "#fff" : "rgb(38, 50, 56)"};
     padding: 1rem;
     border-radius: 1rem;
+
+    .title_progress {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+    }
+    .title {
+      > span {
+        font-size: 1.2rem;
+        font-weight: bolder;
+      }
+    }
     .progress_container {
       margin-top: 20px;
-      display:flex;
-      flex-direction:column;
-      gap:1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+`;
+
+const MeetingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  > .title {
+    margin-bottom: 2rem;
+  }
+  .cart {
+    padding: 1.5rem;
+    background-color: ${(props) =>
+      props.themeContent === "light" ? "#fff" : "rgb(38, 50, 56)"};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    .item1 {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      > img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: all 0.3s ease-in-out;
+        object-fit: cover;
+        &:hover {
+          transform: scale(1.3);
+        }
+      }
+      > .title_time {
+        display: flex;
+        flex-direction: column;
+        > span:first-child {
+          font-weight: bold;
+        }
+        > span:last-child {
+          font-size: 0.9rem;
+        }
+      }
     }
   }
 `;
 
 function Home() {
+  const { theme } = useContext(themeContext);
   return (
-    <HomeContainer>
+    <HomeContainer themeContent={theme}>
       <ItemsContainer>
         <ItemLeft>
           <div className="left_title">
-            <span>Hi Reza,</span>
-            <span>Welcome Back!</span>
-            <span>
+            <span style={{ color: theme === "dark" && "#cfd8dc" }}>
+              Hi Reza,
+            </span>
+            <span style={{ color: theme === "dark" && "#cfd8dc" }}>
+              Welcome Back!
+            </span>
+            <span style={{ color: theme === "dark" && "#90a4ae" }}>
               This page is designed to give some important information about the
               application. Let's make someting together!
             </span>
@@ -230,7 +324,7 @@ function Home() {
               <AiFillStar size={20} color="#2962FF" />
             </div>
             <div className="title">
-              <span>Congratulations John</span>
+              <span>Congratulations Reza</span>
               <span>
                 You have Completed 75% of your profile. Your current progress is
                 great.
@@ -241,7 +335,7 @@ function Home() {
             </div>
           </div>
         </ItemLeft>
-        <ItemMiddle>
+        <ItemMiddle themeContent={theme}>
           <div className="cart">
             <div className="items_cart">
               <div className="svg_titles">
@@ -321,27 +415,50 @@ function Home() {
             </div>
           </div>
         </ItemMiddle>
-        <ItemRight>
+        <ItemRight themeContent={theme}>
           <div className="cart_progress">
             <div className="title">
               <span>Targets</span>
             </div>
             <div className="progress_container">
-              {progressData.map((item,index) => {
+              {progressData.map((item, index) => {
                 return (
                   <div key={index} className="progress_cart">
-                      <div className="title_progress">
-                        <span>Views</span>
-                        <span>{item.completed}</span>
-                      </div>
-                      <div className="progress">
-                        <ProgressBar completedColor={item.completedColor} bgColor={item.bgColor} completed={item.completed} />
-                      </div>
+                    <div className="title_progress">
+                      <span>{item.title}</span>
+                      <span>{item.completed}%</span>
+                    </div>
+                    <div className="progress">
+                      <ProgressBar
+                        completedColor={item.completedColor}
+                        bgColor={item.bgColor}
+                        completed={item.completed}
+                      />
+                    </div>
                   </div>
-                )
+                );
               })}
             </div>
           </div>
+          <MeetingContainer themeContent={theme}>
+            <div className="title">
+              <h2>Meetings</h2>
+            </div>
+            {meetingData.map((item, idx) => (
+              <div key={idx} className="cart">
+                <div className="item1">
+                  <img alt="cart-img" src={item.image} />
+                  <div className="title_time">
+                    <span>{item.name}</span>
+                    <span>{item.time}</span>
+                  </div>
+                </div>
+                <div className="item2">
+                  <IoMdArrowDropright size={22} />
+                </div>
+              </div>
+            ))}
+          </MeetingContainer>
         </ItemRight>
       </ItemsContainer>
     </HomeContainer>

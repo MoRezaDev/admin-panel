@@ -1,0 +1,8 @@
+:root {
+  --toastify-toast-width: 300px;
+  --toastify-color-success: #07bc0c;
+  --toastify-color-light: rgb(229, 252, 241);
+}
+.App {
+  background-color: rgb(236, 239, 241);
+}
