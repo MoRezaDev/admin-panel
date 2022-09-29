@@ -40,6 +40,9 @@ const SideTitle = styled.div`
   border-bottom: 1px silver solid;
   padding: 5px 0;
   margin-bottom: 50px;
+  @media (max-height: 550px) {
+  margin-bottom: 20px;
+  }
   h2 {
     font-weight: 1500;
   }
