@@ -41,7 +41,7 @@ const SideTitle = styled.div`
   padding: 5px 0;
   margin-bottom: 50px;
   @media (max-height: 550px) {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
   }
   h2 {
     font-weight: 1500;
@@ -81,14 +81,21 @@ const Page = styled.div`
 const ThemeContainer = styled.div`
   position: absolute;
   bottom: 50px;
-  left: 20px;
+  left: 30px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  @media (max-width: 550px) {
+    bottom: 20px;
+  }
 
   .setting_icon {
     transition: all 0.2s ease-in-out;
+    font-size: 2rem;
     cursor: pointer;
+    @media (max-height: 550px) {
+      font-size: 1.5rem;
+    }
   }
 
   > span {
@@ -112,7 +119,7 @@ const ThemeItems = styled(motion.div)`
       position: absolute;
       width: fit-content;
       top: -60px;
-      left: 10px;
+      left: 30px;
       background-color: ${(props) =>
         props.themeContent === "light"
           ? "rgb(236, 239, 241)"
@@ -123,6 +130,10 @@ const ThemeItems = styled(motion.div)`
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      @media (max-height: 550px) {
+        top: -90px;
+        left: 60px;
+      }
       > span {
         padding: 0.5rem;
         cursor: pointer;
@@ -296,10 +307,9 @@ function Sidebar({
             <FiSettings
               onClick={() => setShowThemeContainer(!showThemeContainer)}
               className="setting_icon"
-              size={30}
+              // size={30}
             />
             <span onClick={() => setShowThemeContainer(!showThemeContainer)}>
-              {" "}
               Settings
             </span>
             <AnimatePresence>
